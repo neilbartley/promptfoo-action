@@ -57,6 +57,9 @@ export async function run(): Promise<void> {
       'use-config-prompts',
       {required: false},
     );
+    const htmlOutput: string = core.getInput('html-output', {
+      required: false,
+    });
 
     const apiKeys = [
       openaiApiKey,
@@ -128,6 +131,10 @@ export async function run(): Promise<void> {
     }
     if (!noShare) {
       promptfooArgs.push('--share');
+    }
+    if (htmlOutput) {
+      const outputFileHtml = path.join(process.cwd(), 'output.html');
+      promptfooArgs = promptfooArgs.concat(['-o', outputFileHtml]);
     }
 
     const env = {

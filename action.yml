@@ -31,6 +31,9 @@ inputs:
     description: 'Use prompts from config file'
     required: false
     default: 'false'
+  html-output:
+    description: 'Output HTML'
+    required: false
 branding:
   icon: 'box'
   color: 'yellow'
