@@ -93,6 +93,9 @@ function run() {
                 required: false,
             });
             const useConfigPrompts = core.getBooleanInput('use-config-prompts', { required: false });
+            const htmlOutput = core.getInput('html-output', {
+                required: false,
+            });
             const apiKeys = [
                 openaiApiKey,
                 azureApiKey,
@@ -150,6 +153,10 @@ function run() {
             }
             if (!noShare) {
                 promptfooArgs.push('--share');
+            }
+            if (htmlOutput) {
+                const outputFileHtml = path.join(process.cwd(), 'output.html');
+                promptfooArgs = promptfooArgs.concat(['-o', outputFileHtml]);
             }
             const env = Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign(Object.assign({}, process.env), (openaiApiKey ? { OPENAI_API_KEY: openaiApiKey } : {})), (azureApiKey ? { AZURE_OPENAI_API_KEY: azureApiKey } : {})), (anthropicApiKey ? { ANTHROPIC_API_KEY: anthropicApiKey } : {})), (huggingfaceApiKey ? { HF_API_TOKEN: huggingfaceApiKey } : {})), (awsAccessKeyId ? { AWS_ACCESS_KEY_ID: awsAccessKeyId } : {})), (awsSecretAccessKey
                 ? { AWS_SECRET_ACCESS_KEY: awsSecretAccessKey }
